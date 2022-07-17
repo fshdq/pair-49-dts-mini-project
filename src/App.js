@@ -1,13 +1,14 @@
-import { Link } from "react-router-dom";
 import Nav from "./components/Nav";
+import { Route, Routes } from "react-router-dom";
+import Home from './pages/Home';
 
 export default function App() {
   return (
-    <div>
-      <Nav/>
-        <h1 className="text-3xl font-bold underline">
-          Home
-        </h1>
-    </div>
+    <>
+      <Nav />
+      <Routes>
+        <Route exact path="/" element={<Home />} />
+      </Routes>
+    </>
   );
 }
