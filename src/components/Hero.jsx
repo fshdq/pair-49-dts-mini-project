@@ -1,36 +1,65 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import requests from "../Request";
+import PopularMovies from "./PopularMovies";
 
-const Carousel = (props) => {
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination, Navigation } from "swiper";
+import "swiper/css";
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+
+const Main = () => {
+  const [movies, setMovies] = useState([]);
+
+  // const movie = movies[Math.floor(Math.random() * movies.length)];
+
+  useEffect(() => {
+    axios.get(requests.requestPopular).then((response) => {
+      setMovies(response.data.results);
+    });
+  }, []);
+
+  const truncateString = (str, num) => {
+    if (str?.length > num) {
+      return str.slice(0, num) + "...";
+    } else {
+      return str;
+    }
+  };
+
+  const popular = movies.slice(0, 5);
+  // const listItems = popular.map((movie) => <li key={movie.id}>{movie.title}</li>);
+  const listItems = popular.map((data) => {
+    return (
+      <SwiperSlide key={data.id}>
+        <PopularMovies
+          image={data.backdrop_path}
+          title={data.title}
+          language={data.original_language}
+          genre={data.genre_ids}
+          released={data.release_date}
+          overview={data.overview}
+        />
+      </SwiperSlide>
+    );
+  });
+
   return (
-
-    <div className="w-full h-[600px] text-white">
-      <div className="w-full h-full relative">
-        <div className="relative flex flex-row w-full h-full">
-          <div className="absolute w-1/2 h-full top-0 right-0">
-            <img
-              className="w-full object-cover "
-              src={`https://image.tmdb.org/t/p/original/${props?.image}`}
-              alt={props?.title}
-            />
-          </div>
-          <div className="absolute w-full gap-y-2 h-full top-0 left-0 bg-gradient-to-r from-black via-[#040B16] to-transparent">
-            <div className="h-full sm:w-1/2 flex flex-col items-start justify-center p-4 md:p-8 ">
-              <h1 className="text-3xl md:text-5xl font-bold text-left">
-                {props?.title}
-              </h1>
-              <ul className="inline-flex gap-x-2">
-                <li>Genre 1</li>
-                <li>{props?.language}</li>
-                <li>{props?.genre}</li>
-              </ul>
-              <p className="text-gray-400 text-sm mb-4">{props?.released}</p>
-              <p className="text-gray-200 text-left">{props?.overview}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <>
+      <Swiper
+        pagination={{
+          type: "fraction",
+        }}
+        navigation={true}
+        modules={[Pagination, Navigation]}
+      >
+        {listItems}
+      </Swiper>
+    </>
   );
 };
 
-export default Carousel;
+export default Main;
