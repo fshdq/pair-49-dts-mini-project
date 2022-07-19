@@ -126,11 +126,11 @@ const Login = () => {
           </div>
         </div>
       </div>
-      <div className="absolute h-full">
+      <div className="absolute h-full w-full">
         <div class="fixed inset-0 bg-black bg-opacity-75 transition-opacity"></div>
         <img
           src={background}
-          className="h-full object-cover"
+          className="h-full w-full object-cover"
           alt="background"
         />
       </div>
