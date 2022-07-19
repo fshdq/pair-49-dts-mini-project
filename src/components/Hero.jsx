@@ -5,11 +5,6 @@ import PopularMovies from "./PopularMovies";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation } from "swiper";
-import "swiper/css";
-// Import Swiper styles
-import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/navigation";
 
 const Main = () => {
   const [movies, setMovies] = useState([]);

@@ -1,10 +1,12 @@
 import React from "react";
 import { GiftIcon, SearchIcon, BellIcon } from "@heroicons/react/outline";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-export default function Nav() {
+export default function Nav(props) {
+  const navigate = useNavigate();
   return (
-    <nav className="bg-black border-gray-200 px-2 sm:px-4 py-2.5 rounded">
+    <nav className="bg-black border-gray-200 px-2 sm:px-4 py-2.5">
       <div className="container flex flex-wrap justify-between items-center mx-auto h-24">
         <Link to="/" className="flex items-center">
           <img
@@ -13,7 +15,7 @@ export default function Nav() {
             alt="Logo"
           />
         </Link>
-        <div className="flex sm:gap-x-4 items-center md:order-2 ">
+        {/* <div className="flex sm:gap-x-4 items-center md:order-2 ">
           <button>
             <SearchIcon className="h-5 w-5 text-gray-300 hover:text-white" />
           </button>
@@ -108,7 +110,7 @@ export default function Nav() {
               ></path>
             </svg>
           </button>
-        </div>
+        </div> */}
         <div
           className="hidden justify-between items-center w-full md:flex md:w-auto md:order-1"
           id="mobile-menu-2"
@@ -150,6 +152,14 @@ export default function Nav() {
               My List
             </Link>
           </div>
+        </div>
+        <div className="flex sm:gap-x-4 items-center md:order-2 ">
+          <button
+            className="inline-flex flex-shrink-0 items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+            onClick={() => navigate(props.login ? "/login" : "/")}
+          >
+            {props.login ? "Log In" : "Sign In"}
+          </button>
         </div>
       </div>
     </nav>
