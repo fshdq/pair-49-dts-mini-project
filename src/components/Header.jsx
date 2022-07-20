@@ -1,9 +1,8 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
 
 export default function Header(props) {
-  const navigate = useNavigate();
   return (
     <div className="bg-black border-gray-200 px-2 sm:px-4 py-2.5">
       <div className="relative py-5 flex items-center justify-center lg:justify-between">
@@ -34,12 +33,12 @@ export default function Header(props) {
               />
             </svg>
           </button>
-          <button
-            className="inline-flex flex-shrink-0 items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
-            onClick={() => navigate(props.login ? "/login" : "/")}
-          >
-            {props.login ? "Log In" : "Sign In"}
-          </button>
+          <Link to="/login">
+            {" "}
+            <button className="inline-flex flex-shrink-0 items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+              Login
+            </button>
+          </Link>
         </div>
       </div>
     </div>

@@ -36,16 +36,16 @@ const MoviesSlide = ({ title, fetchUrl }) => {
                     src={`https://image.tmdb.org/t/p/w500/${item?.backdrop_path}`}
                     alt={item.title}
                   />
-                  <div class="absolute inset-0 flex flex-col gap-y-2 justify-center w-full h-full hover:bg-black/80 opacity-0 hover:opacity-100 text-white cursor-pointer">
-                    <p class="text-sm md:text-base text-center text-white mx-auto">
+                  <div className="absolute inset-0 flex flex-col gap-y-2 justify-center w-full h-full hover:bg-black/80 opacity-0 hover:opacity-100 text-white cursor-pointer">
+                    <p className="text-sm md:text-base text-center text-white mx-auto">
                       {item?.title}
                     </p>
                     <div className="flex-shrink">
-                      <button class="inline-flex items-center px-4 py-2 border border-gray-500 shadow-sm text-base font-medium rounded-md text-white bg-transparent hover:bg-gray-600/50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                      <button className="inline-flex items-center px-4 py-2 border border-gray-500 shadow-sm text-base font-medium rounded-md text-white bg-transparent hover:bg-gray-600/50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                         Watch
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
-                          class="h-6 w-6 ml-2"
+                          className="h-6 w-6 ml-2"
                           fill="none"
                           viewBox="0 0 24 24"
                           stroke="currentColor"
