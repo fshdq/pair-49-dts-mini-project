@@ -9,6 +9,8 @@ import DetailPage from "./pages/DetailPage";
 
 import { AuthContextProvider } from "./context/AuthContext";
 import ProtectedRoute from "components/ProtectedRoute";
+import Footer from "components/Footer";
+import MyList from "pages/MyList";
 
 export default function App() {
   return (
@@ -28,6 +30,14 @@ export default function App() {
             }
           />
           <Route
+            path="/my-list"
+            element={
+              <ProtectedRoute>
+                <MyList />
+              </ProtectedRoute>
+            }
+          />
+          <Route
             path="/details/:movieId"
             element={
               <ProtectedRoute>
@@ -36,6 +46,7 @@ export default function App() {
             }
           />
         </Routes>
+        <Footer />
       </AuthContextProvider>
     </>
   );

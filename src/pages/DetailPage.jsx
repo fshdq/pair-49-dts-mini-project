@@ -5,9 +5,9 @@ import { useParams } from "react-router-dom";
 import { auth, db } from "../firebase-config";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { arrayUnion, doc, updateDoc } from "firebase/firestore";
-import requests from "Request";
+// import tmdbApi from "../services/tmdbApi"
 
-import MoviesSlide from "components/MoviesSlide";
+// import MoviesSlide from "components/MoviesSlide";
 
 const DetailPage = () => {
   const [movieDetail, setMovieDetail] = useState([]);
@@ -24,6 +24,8 @@ const DetailPage = () => {
         setMovieDetail(response.data);
       });
   }, [movieId]);
+
+  // const { data: similarMovie } = tmdbApi.getMovieSimilar(movieId);
 
   const savedMovieID = doc(db, "users", `${user?.email}`);
 
@@ -42,6 +44,11 @@ const DetailPage = () => {
     }
   };
 
+  const hourminute = (time) => {
+    const hour = Math.floor(time / 60);
+    const minute = time % 60;
+    return `${hour} h ${minute} min`;
+  };
   console.log("id: ", movieDetail);
   return (
     <>
@@ -69,9 +76,9 @@ const DetailPage = () => {
               </button>
             </div>
             <p className="text-gray-400 text-sm">
-              Released: {movieDetail?.release_date}
+              Released: {movieDetail?.release_date} | {hourminute(movieDetail?.runtime)}
             </p>
-            <p className="w-full md:max-w-[70%] lg:max-w-[50%] xl:max-w-[35%] text-gray-200">
+            <p className="w-full md:max-w-[70%] lg:max-w-[50%] xl:max-w-[35%] text-gray-200 py-2">
               {movieDetail?.overview}
             </p>
           </div>

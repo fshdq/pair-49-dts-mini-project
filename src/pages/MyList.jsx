@@ -1,51 +1,27 @@
 import React, { useState, useEffect } from "react";
-// import Movie from "./Movie";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation } from "swiper";
-
-import { BookmarkIcon } from "@heroicons/react/outline";
-import { auth, db } from "../firebase-config";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { arrayUnion, doc, updateDoc } from "firebase/firestore";
-
 import { Link } from "react-router-dom";
 
-const MoviesSlide = ({ title, fetchUrl }) => {
-  const [movies, setMovies] = useState([]);
+import { db, auth } from "../firebase-config";
+import { updateDoc, doc, onSnapshot } from "firebase/firestore";
+import { useAuthState } from "react-firebase-hooks/auth";
 
-  const [saved, setSaved] = useState([false]);
+const MyList = () => {
+  const [movies, setMovies] = useState([]);
   const [user, loading] = useAuthState(auth);
 
-  const movieID = doc(db, "users", `${user?.email}`);
+  const savedMovieID = doc(db, "users", `${user?.email}`);
 
   useEffect(() => {
-    fetch(fetchUrl)
-      .then((res) => res.json())
-      .then((data) => {
-        setMovies(data.results);
-      });
-  }, [fetchUrl]);
-
-  // const moviesData = movies.slice(0, 10);
-  const saveShow = async () => {
-    if (user?.email) {
-      setSaved(true);
-      await updateDoc(movieID, {
-        savedShows: arrayUnion({
-          id: movies.id,
-          title: movies.title,
-          img: movies.backdrop_path,
-        }),
-      },
-      console.log(movies.id));
-    } else {
-      alert("Please log in to save a movie");
-    }
-  };
+    onSnapshot(savedMovieID, (doc) => {
+      setMovies(doc.data()?.savedShows);
+    });
+  }, [user?.email]);
   return (
     <>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-white font-bold md:text-xl p-4">{title}</h2>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-screen">
+        <h2 className="text-white font-bold md:text-xl p-4">My Saved Movies</h2>
         <div className="flex">
           <Swiper
             spaceBetween={24}
@@ -56,17 +32,14 @@ const MoviesSlide = ({ title, fetchUrl }) => {
             {movies.map((item, id) => (
               // <Movie key={id} item={item} />
               <SwiperSlide key={item.id}>
-                <div className="relative">
+                <div className="relative transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110">
                   <img
                     className="w-full h-full object-cover"
                     loading="lazy"
-                    src={`https://image.tmdb.org/t/p/w500/${item?.backdrop_path}`}
+                    src={`https://image.tmdb.org/t/p/w500/${item?.img}`}
                     alt={item.title}
                   />
-                  <div className="absolute inset-0 flex flex-col gap-y-2 justify-center w-full h-full hover:bg-black/80 opacity-0 hover:opacity-100 text-white cursor-pointer">
-                    <button onClick={saveShow} className="absolute mt-2 mr-2 top-0 right-0 p-2 bg-transparent hover:bg-white hover:text-black">
-                      <BookmarkIcon className="h-6 w-6" />
-                    </button>
+                  <div className="absolute inset-0 flex flex-col gap-y-2 justify-center w-full h-full hover:bg-slate-800/80 opacity-0 hover:opacity-100 text-white cursor-pointer">
                     <p className="text-sm md:text-base text-center text-white mx-auto">
                       {item?.title}
                     </p>
@@ -103,4 +76,4 @@ const MoviesSlide = ({ title, fetchUrl }) => {
   );
 };
 
-export default MoviesSlide;
+export default MyList;
