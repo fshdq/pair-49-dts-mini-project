@@ -1,10 +1,28 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { UserAuth } from '../context/AuthContext';
 import tv from "../assets/tv.png";
 import background from "../assets/bg_login.jpg";
 import Header from "../components/Header";
 
 const Register = () => {
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
+  const [password, setPassword] = useState("");
+  const { signUp } = UserAuth();
+  let navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    try {
+      await signUp(email, password);
+      navigate("/");
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
   return (
     <>
       <Header />
@@ -30,7 +48,7 @@ const Register = () => {
                 Siap menonton? Masukkan email untuk membuat atau memulai lagi
                 keanggotaanmu.
               </p>
-              <form className="font-secondary flex flex-col w-full px-2 max-w-lg mx-auto justify-center">
+              <form onSubmit={handleSubmit} className="font-secondary flex flex-col w-full px-2 max-w-lg mx-auto justify-center">
                 <div className="flex gap-x-2 items-center">
                   <div className="mt-1">
                     <input
@@ -39,6 +57,7 @@ const Register = () => {
                       type="email"
                       placeholder="Email Anda"
                       autoComplete="email"
+                      onChange={(e) => setEmail(e.target.value)}
                       required
                       className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     />
@@ -49,6 +68,7 @@ const Register = () => {
                       name="password"
                       type="password"
                       autoComplete="current-password"
+                      onChange={(e) => setPassword(e.target.value)}
                       required
                       className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     />

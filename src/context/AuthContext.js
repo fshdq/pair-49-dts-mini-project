@@ -1,40 +1,49 @@
-import { createContext, useContext, useEffect, useState } from "react";
-import { firebaseAuth } from "../firebase-config";
+import { createContext, useContext, useEffect, useState } from 'react';
+import { auth, db } from '../firebase-config';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
-} from "firebase/auth";
-import { setDoc, doc } from "firebase/firestore";
+} from 'firebase/auth';
+import {setDoc,doc} from 'firebase/firestore'
 
 const AuthContext = createContext();
 
 export function AuthContextProvider({ children }) {
   const [user, setUser] = useState({});
 
-  function register(email, password) {
-    return createUserWithEmailAndPassword(email, password);
+  function signUp(email, password) {
+    createUserWithEmailAndPassword(auth, email, password);
+    setDoc(doc(db, 'users', email), {
+        savedShows: []
+    })
   }
 
-  function login(email, password) {
-    return signInWithEmailAndPassword(firebaseAuth, email, password);
+  function logIn(email, password) {
+    return signInWithEmailAndPassword(auth, email, password);
   }
 
-  function logout() {
-    return signOut(firebaseAuth);
+  function logOut() {
+    return signOut(auth);
   }
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(firebaseAuth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
     });
-    return () => unsubscribe();
+    return () => {
+      unsubscribe();
+    };
   });
 
   return (
-    <AuthContext.Provider value={{ register, login, logout, user }}>
+    <AuthContext.Provider value={{ signUp, logIn, logOut, user }}>
       {children}
     </AuthContext.Provider>
   );
+}
+
+export function UserAuth() {
+  return useContext(AuthContext);
 }
