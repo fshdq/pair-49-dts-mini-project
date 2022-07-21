@@ -69,13 +69,13 @@ export default function Nav(props) {
         </div>
         {user?.email ? (
           <div className="flex sm:gap-x-4 items-center md:order-2 ">
-            <Link to="/profile">
-              {" "}
-              <button className="inline-flex flex-shrink-0 items-center px-4 py-2 border border-white hover:bg-gray-700 text-sm font-medium rounded-md shadow-sm text-white bg-transparent focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
-                My Profile
-              </button>
-            </Link>
-            <button onClick={handleLogout} className="inline-flex flex-shrink-0 items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+            <button className="inline-flex flex-shrink-0 items-center px-4 py-2 border border-white hover:bg-gray-700 text-sm font-medium rounded-md shadow-sm text-white bg-transparent focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+              My Profile
+            </button>
+            <button
+              onClick={handleLogout}
+              className="inline-flex flex-shrink-0 items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+            >
               Logout
             </button>
           </div>

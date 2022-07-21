@@ -10,38 +10,21 @@ import { arrayUnion, doc, updateDoc } from "firebase/firestore";
 
 import { Link } from "react-router-dom";
 
-const MoviesSlide = ({ title, fetchUrl }) => {
-  const [movies, setMovies] = useState([]);
+const SeriesSlide = ({ title, fetchUrl }) => {
+  const [series, setSeries] = useState([]);
 
   const [saved, setSaved] = useState([false]);
   const [user, loading] = useAuthState(auth);
-
-  const movieID = doc(db, "users", `${user?.email}`);
 
   useEffect(() => {
     fetch(fetchUrl)
       .then((res) => res.json())
       .then((data) => {
-        setMovies(data.results);
+        setSeries(data.results);
       });
   }, [fetchUrl]);
 
-  // const moviesData = movies.slice(0, 10);
-  const saveShow = async () => {
-    if (user?.email) {
-      setSaved(true);
-      await updateDoc(movieID, {
-        savedShows: arrayUnion({
-          id: movies.id,
-          title: movies.title,
-          img: movies.backdrop_path,
-        }),
-      },
-      console.log(movies.id));
-    } else {
-      alert("Please log in to save a movie");
-    }
-  };
+  // const movieID = doc(db, "users", `${user?.email}`);
   return (
     <>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -53,22 +36,25 @@ const MoviesSlide = ({ title, fetchUrl }) => {
             navigation={true}
             modules={[Pagination, Navigation]}
           >
-            {movies.map((item, id) => (
+            {series.map((item, id) => (
               // <Movie key={id} item={item} />
               <SwiperSlide key={item.id}>
                 <div className="relative">
                   <img
                     className="w-full h-full object-cover"
                     loading="lazy"
-                    src={`https://image.tmdb.org/t/p/w500/${item?.backdrop_path}`}
+                    src={`https://image.tmdb.org/t/p/w500/${item?.poster_path}`}
                     alt={item.title}
                   />
                   <div className="absolute inset-0 flex flex-col gap-y-2 justify-center w-full h-full hover:bg-black/80 opacity-0 hover:opacity-100 text-white cursor-pointer">
-                    <button onClick={saveShow} className="absolute mt-2 mr-2 top-0 right-0 p-2 bg-transparent hover:bg-white hover:text-black">
+                    <button
+                      // onClick={saveShow}
+                      className="absolute mt-2 mr-2 top-0 right-0 p-2 bg-transparent hover:bg-white hover:text-black"
+                    >
                       <BookmarkIcon className="h-6 w-6" />
                     </button>
                     <p className="text-sm md:text-base text-center text-white mx-auto">
-                      {item?.title}
+                      {item?.name}
                     </p>
 
                     <div className="flex-shrink">
@@ -103,4 +89,4 @@ const MoviesSlide = ({ title, fetchUrl }) => {
   );
 };
 
-export default MoviesSlide;
+export default SeriesSlide;
