@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { UserAuth } from '../context/AuthContext';
 import tv from "../assets/tv.png";
 import background from "../assets/bg_login.jpg";
-import Header from "../components/Header";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -25,7 +24,6 @@ const Register = () => {
 
   return (
     <>
-      <Header />
       <div className="relative">
         <div className="absolute h-[768px] w-full">
           <img
@@ -93,6 +91,7 @@ const Register = () => {
                   </button>
                 </div>
               </form>
+              { error ? <p className="text-red-500 text-sm md:text-base">{error}</p> : null }
             </div>
           </div>
           <div className="py-16 bg-black border-y-8 border-zinc-700">

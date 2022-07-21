@@ -6,7 +6,8 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 
-import { AuthContextProvider } from './context/AuthContext';
+import { AuthContextProvider } from "./context/AuthContext";
+import ProtectedRoute from "components/ProtectedRoute";
 
 export default function App() {
   return (
@@ -17,7 +18,14 @@ export default function App() {
           <Route exact path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route
+            path='/profile'
+            element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </AuthContextProvider>
     </>
