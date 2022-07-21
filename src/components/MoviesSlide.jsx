@@ -13,8 +13,8 @@ import { Link } from "react-router-dom";
 const MoviesSlide = ({ title, fetchUrl }) => {
   const [movies, setMovies] = useState([]);
 
-  const [saved, setSaved] = useState([false]);
-  const [user, loading] = useAuthState(auth);
+  const [setSaved] = useState([false]);
+  const [user] = useAuthState(auth);
 
   const movieID = doc(db, "users", `${user?.email}`);
 
