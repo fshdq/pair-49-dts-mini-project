@@ -4,12 +4,12 @@ import { Pagination, Navigation } from "swiper";
 import { Link } from "react-router-dom";
 
 import { db, auth } from "../firebase-config";
-import { updateDoc, doc, onSnapshot } from "firebase/firestore";
+import { doc, onSnapshot } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 const MyList = () => {
   const [movies, setMovies] = useState([]);
-  const [user, loading] = useAuthState(auth);
+  const [user] = useAuthState(auth);
 
   const savedMovieID = doc(db, "users", `${user?.email}`);
 
@@ -17,7 +17,7 @@ const MyList = () => {
     onSnapshot(savedMovieID, (doc) => {
       setMovies(doc.data()?.savedShows);
     });
-  }, [user?.email]);
+  }, [savedMovieID]);
   return (
     <>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-screen">

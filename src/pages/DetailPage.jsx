@@ -11,8 +11,8 @@ import { arrayUnion, doc, updateDoc } from "firebase/firestore";
 
 const DetailPage = () => {
   const [movieDetail, setMovieDetail] = useState([]);
-  const [saved, setSaved] = useState([false]);
-  const [user, loading] = useAuthState(auth);
+  const [setSaved] = useState([false]);
+  const [user] = useAuthState(auth);
   let { movieId } = useParams();
 
   useEffect(() => {

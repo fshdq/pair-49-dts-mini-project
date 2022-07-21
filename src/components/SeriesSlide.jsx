@@ -13,8 +13,8 @@ import { Link } from "react-router-dom";
 const SeriesSlide = ({ title, fetchUrl }) => {
   const [series, setSeries] = useState([]);
 
-  const [saved, setSaved] = useState([false]);
-  const [user, loading] = useAuthState(auth);
+  const [setSaved] = useState([false]);
+  const [user] = useAuthState(auth);
 
   useEffect(() => {
     fetch(fetchUrl)
