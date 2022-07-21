@@ -24,7 +24,25 @@ const SeriesSlide = ({ title, fetchUrl }) => {
       });
   }, [fetchUrl]);
 
-  // const movieID = doc(db, "users", `${user?.email}`);
+  const series_id = doc(db, "users", `${user?.email}`);
+  const saveShow = async () => {
+    if (user?.email) {
+      setSaved(true);
+      await updateDoc(
+        series_id,
+        {
+          savedShows: arrayUnion({
+            id: series.id,
+            title: series.title,
+            img: series.backdrop_path,
+          }),
+        },
+        console.log(series.id)
+      );
+    } else {
+      alert("Please log in to save a movie");
+    }
+  };
   return (
     <>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -48,7 +66,7 @@ const SeriesSlide = ({ title, fetchUrl }) => {
                   />
                   <div className="absolute inset-0 flex flex-col gap-y-2 justify-center w-full h-full hover:bg-black/80 opacity-0 hover:opacity-100 text-white cursor-pointer">
                     <button
-                      // onClick={saveShow}
+                      onClick={saveShow}
                       className="absolute mt-2 mr-2 top-0 right-0 p-2 bg-transparent hover:bg-white hover:text-black"
                     >
                       <BookmarkIcon className="h-6 w-6" />
