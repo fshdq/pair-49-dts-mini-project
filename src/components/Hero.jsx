@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import requests from "../Request";
+import { requestsMovies } from "../Request";
 import PopularMovies from "./PopularMovies";
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -12,7 +12,7 @@ const Main = () => {
   // const movie = movies[Math.floor(Math.random() * movies.length)];
 
   useEffect(() => {
-    axios.get(requests.requestPopular).then((response) => {
+    axios.get(requestsMovies.requestPopular).then((response) => {
       setMovies(response.data.results);
     });
   }, []);

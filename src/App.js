@@ -11,6 +11,7 @@ import { AuthContextProvider } from "./context/AuthContext";
 import ProtectedRoute from "components/ProtectedRoute";
 import Footer from "components/Footer";
 import MyList from "pages/MyList";
+import Series from "pages/Series";
 
 export default function App() {
   return (
@@ -19,6 +20,7 @@ export default function App() {
         <Nav />
         <Routes>
           <Route exact path="/" element={<Home />} />
+          <Route exact path="/series" element={<Series />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route
