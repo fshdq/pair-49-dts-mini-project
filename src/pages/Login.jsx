@@ -27,7 +27,7 @@ const Login = () => {
 
   return (
     <>
-      <div className="absolute w-full min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8 z-10">
+      <div className="relative w-full min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8 z-10">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <img className="mx-auto h-12 w-auto" src={logo} alt="Workflow" />
         </div>
